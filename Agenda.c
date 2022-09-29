@@ -1,6 +1,6 @@
 /*
 *Desarrollador: Aaron Moreno Villeda
-*Fecha de creación: 26/09/2022
+*Fecha de creación: 29/09/2022
 *
 *1.-Debes crear un array con 12 elementos, uno por cada mes del año, cada elemento debe tener a su vez un array con tantos elementos como días tenga dicho mes. 
 *Es decir, la posicion 0 del array, que correspondería a enero, debería tener 31 elementos para los 31 días correspondientes. 
@@ -11,32 +11,32 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct 
-{
-    char task[50];
-    struct SCHEDULE *next;
-}SCHEDULE;
 
 int main()
 {
-  int *months[12];
-  int days[12]={31,28,31,30,31,30,31,31,30,31,30,31};//# of days
-  
-  for(int i=0;i<12;i++)
-  {
-      months[i]=malloc(sizeof(int)*days[i]);
-  }
-  
-  for(int i=0;i<12;i++)
+    //data type alocated on each position of the array 
+    struct SCHEDULE{
+        char task[50];
+        struct SCHEDULE* next;
+    };
+    
+    //static pointer array with 12 elements
+    struct SCHEDULE***agenda=malloc(sizeof(struct SCHEDULE**)*12);
+    int days;
+    
+    //dynamic alocation with as many elements as days have the corresponding month 
+    for(int i=0;i<12;i++)
     {
-        for(int j=0;j<days[i];j++)
-        {
-            printf("%3d ",days[i]);
+        switch (i) {//# of days
+            case 1: case 3:  case 5: case 7: case 8: case 10: case 12 : days = 31; break;
+            case 4: case 6: case 9:  case 11: days = 30; break;
+            default: days = 28;
         }
-        printf("\n");
+        
+        agenda[i]=malloc(sizeof(struct SCHEDULE*)*days);
+        
+        for (int j=0;j<days;j++) agenda[i][j]=NULL;
     }
-  
-  for(int i=0;i<12;i++){free(months[i]);}//free each array
-  
+    
   return 0;
 }
