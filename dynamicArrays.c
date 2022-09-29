@@ -26,6 +26,7 @@ void unod()
     p[i]=i+1;
     printf("%d  ",p[i]);
   } 
+  free(p);//DON´T FORGET TO FREE MEMORY
 }
 
 void dosd()
@@ -46,8 +47,8 @@ void dosd()
       }
       printf("\n");
   }
+  free(p);//DON´T FORGET TO FREE MEMORY
 }
-
 void dynamic()
 {
     int size;
@@ -72,4 +73,6 @@ void dynamic()
         }
         printf("\n\n");
     }
+    free(p);//DON´T FORGET TO FREE MEMORY
+    free(cols);
 }
