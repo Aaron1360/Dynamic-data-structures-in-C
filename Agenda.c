@@ -9,6 +9,7 @@
 */
 
 #include <stdio.h>
+#include <stdlib.h>
 
 typedef struct 
 {
@@ -18,10 +19,24 @@ typedef struct
 
 int main()
 {
-  int *months[12];//static array of 12 elements
+  int *months[12];
   int days[12]={31,28,31,30,31,30,31,31,30,31,30,31};//# of days
   
-  for(int )
+  for(int i=0;i<12;i++)
+  {
+      months[i]=malloc(sizeof(int)*days[i]);
+  }
+  
+  for(int i=0;i<12;i++)
+    {
+        for(int j=0;j<days[i];j++)
+        {
+            printf("%3d ",days[i]);
+        }
+        printf("\n");
+    }
+  
+  for(int i=0;i<12;i++){free(months[i]);}//free each array
   
   return 0;
 }
