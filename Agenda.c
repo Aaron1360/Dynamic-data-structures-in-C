@@ -10,8 +10,18 @@
 
 #include <stdio.h>
 
+typedef struct 
+{
+    char task[50];
+    struct SCHEDULE *next;
+}SCHEDULE;
+
 int main()
 {
+  int *months[12];//static array of 12 elements
+  int days[12]={31,28,31,30,31,30,31,31,30,31,30,31};//# of days
+  
+  for(int )
   
   return 0;
 }
