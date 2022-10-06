@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <string.h>
 
@@ -10,17 +9,6 @@ struct LIST
 };
 
 struct LIST *shoppingList = NULL;
-
-void createList();
-void showList();
-
-int main()
-{
-    createList();
-    showList();
-
-    return 0;
-}
 
 void createList()
 {
@@ -47,25 +35,22 @@ void createList()
     
     printf("NEW LIST CREATED!\n\n");
 }
-
 void showList()
 {
     struct LIST *item = shoppingList;
     int i=1;
-    
-    printf("SHOPPING LIST: \n\n");
-    
-    for(int i=1;i<4; i++)
+    while(i<4)
     {
-        printf("Article %d = %s x %d\n\n",i,item->product,item->account);
-        item = item->next;
+        printf("article %d: %s x %d\n\n",i,item->product,item->account);
+        i++;
+        item=item->next;
     }
-    /*printf("Article %d = %s x %d\n\n",i,item->product,item->account);
-    item=item->next;
-    i++;
-    printf("Article %d = %s x %d\n\n",i,item->product,item->account);
-    item=item->next;
-    i++;
-    printf("Article %d = %s x %d\n\n",i,item->product,item->account);*/
-   
 }
+int main()
+{
+    createList();
+    showList();
+
+    return 0;
+}
+
