@@ -89,7 +89,28 @@ void removeElementList()
    if(num == 1 && shoppingList != NULL){shoppingList = shoppingList->next;}
    else
    {
+       struct list *item=malloc(sizeof(struct list));
+       item = shoppingList;
        
+       for(int i=1;item;i++)
+       {
+           if(i == num-1)
+           {
+               if(item->next->next == NULL)
+               {
+                   item->next = NULL;
+               }
+               else
+               {
+                   item->next = item->next->next;
+               }
+               item = NULL;
+               free(item);
+           }
+           if(item)
+           {
+               item = item->next;
+           }
        }
    }
    printf("\nARTICLE %d REMOVED\n",num);
@@ -158,3 +179,4 @@ int main()
 
     return 0;
 }
+
