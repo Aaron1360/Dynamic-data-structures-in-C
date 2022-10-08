@@ -1,5 +1,5 @@
 /******************************************************************************
-dynamic list third try
+dynamic list third attempt
 *******************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,7 +16,7 @@ struct list *shoppingList = NULL;
 
 void callMenuList();
 
-void showList()
+void showList(bool optionalMenu)
 {
     struct list *item;
     item=shoppingList;
@@ -27,7 +27,7 @@ void showList()
         item=item->next;    
     }
     printf("\n");
-    callMenuList();
+    if(optionalMenu){callMenuList();}
     
 }
 
@@ -80,7 +80,21 @@ void addElementList()
 }
 void removeElementList()
 {
-    
+   showList(false);
+   
+   int num;
+   printf("Type the number of the article you want to remove: ");
+   scanf("%d",&num);
+   system("clear");
+   if(num == 1 && shoppingList != NULL){shoppingList = shoppingList->next;}
+   else
+   {
+       
+       }
+   }
+   printf("\nARTICLE %d REMOVED\n",num);
+   callMenuList();
+   
 }
 
 void createList()
@@ -90,7 +104,7 @@ void createList()
     insertElementList(product,6);
     
     strcpy(product,"Eggs");
-    insertElementList(product,6);
+    insertElementList(product,12);
     
     strcpy(product,"Bread");
     insertElementList(product,1);
@@ -120,7 +134,7 @@ void callMenuList()
     switch(option)
     {
         case 1:
-            showList();
+            showList(true);
             break;
         case 2:
             addElementList();
@@ -132,6 +146,8 @@ void callMenuList()
             createList();
             break;
         case 5:
+            system("clear");
+            printf("\n\tPROGRAM FINISHED\n");
             break;
     }
 }
