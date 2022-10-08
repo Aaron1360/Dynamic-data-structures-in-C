@@ -1,5 +1,5 @@
 /******************************************************************************
-dynamic list third attempt
+DYNAMIC LIST EXAMPLE JAVIER VILLENA COMPLETED
 *******************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
