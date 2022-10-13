@@ -57,28 +57,21 @@ int nElements()
     list *cont = NULL;
     cont = first;
     int index = 0;
-    
+
     for(int i = 1; cont; i++)
     {
         index = i;
         cont = cont->next;
     }
     return index;
+    
 }
 
 void display(int position)
 {
     list *cont = NULL;
     cont = first;
-    /*int index = 0;
     
-    for(int i = 1; cont; i++)//CHECK # OF ELEMENTS
-    {
-        index = i;
-        cont = cont->next;
-    }
-    cont = first;//RETURN TO THE FIRST ELEMENT
-    */
     if(position > nElements())
     {
         printf("***YOUR LIST ONLY HAVE %d ELEMENTS****\n\n",nElements()); 
@@ -89,7 +82,38 @@ void display(int position)
         {
             cont = cont->next;
         }
-        printf("Number #%d of %d = %d\n\n",position,nElements(),cont->num);
+        printf("Number #%d = %d\n\n",position,cont->num);
+    }
+}
+
+void delete(int position)
+{
+    list *cont = NULL,*temp = NULL;
+    cont = first;
+    temp = first->next;
+    if(position > nElements())
+    {
+        printf("***YOUR LIST ONLY HAVE %d ELEMENTS****\n\n",nElements()); 
+    }
+    else 
+    {
+        for(int i = 1; i<position-1; i++)
+        {
+            cont = cont->next;
+            temp = temp->next;
+        }
+        
+        if(temp->next != NULL)
+        {
+            temp = temp->next;
+            printf("cont: #%d\n temp: #%d\n\n",cont->num,temp->num);
+        }
+        else
+        {
+            printf("cont: #%d \n\n",cont->num);
+        }
+        
+        
     }
 }
 
@@ -154,7 +178,7 @@ int main()
                 printList();
                 printf("Enter the positon of the number you want to delete: ");
                 scanf("%d",&position);
-                if(position > 0 && position <= nElements()){/*TODO: DELETE FUNCTION*/}
+                if(position > 0 && position <= nElements()){delete(position);}
                 else{printf("***ERROR***\n\n");}
             }
             main();
