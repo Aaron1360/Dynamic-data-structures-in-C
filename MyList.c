@@ -58,19 +58,17 @@ void display(int position)
     cont = first;
     int index = 0;
     
-    for(int i = 1; cont->next; i++)
+    for(int i = 1; cont; i++)//CHECK # OF ELEMENTS
     {
         index = i;
         cont = cont->next;
     }
-    index+=1;
-    printf("# of elements: %d\n\n",index);
+    cont = first;//RETURN TO THE FIRST ELEMENT
     
-    cont = first;
     if(position > index)
-        {
-            printf("***YOUR LIST ONLY HAVE %d ELEMENTS****\n\n",index); 
-        }
+    {
+        printf("***YOUR LIST ONLY HAVE %d ELEMENTS****\n\n",index); 
+    }
     else 
     {
         for(int i = 1; i<position; i++)
@@ -107,21 +105,25 @@ int main()
             add(number,true);
             main();
             break;
+            
         case 2:
             printf("Enter a number: ");
             scanf("%d",&number);
             add(number,false);
             main();
             break;
+            
         case 3:
             if(first == NULL){printf("\n***LIST EMPTY***\n\n"); main();}
             else{
                 printf("Enter the positon of the number you want to see: ");
                 scanf("%d",&position);
-                display(position);
+                if(position > 0){display(position);}
+                else{printf("***ERROR***\n\n");}
                 main();
             }
             break;
+            
         case 4:
             if(first == NULL){printf("\n***LIST EMPTY***\n\n"); main();}
             else{
@@ -130,6 +132,7 @@ int main()
                 main();
             }
             break;
+            
         case 5:
             system("clear");
             printf("\n***PROGRAM FINISHED***\n");
