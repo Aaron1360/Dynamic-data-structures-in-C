@@ -52,11 +52,25 @@ void printList()
     printf("\n");
 }
 
-void display(int position)
+int nElements()
 {
     list *cont = NULL;
     cont = first;
     int index = 0;
+    
+    for(int i = 1; cont; i++)
+    {
+        index = i;
+        cont = cont->next;
+    }
+    return index;
+}
+
+void display(int position)
+{
+    list *cont = NULL;
+    cont = first;
+    /*int index = 0;
     
     for(int i = 1; cont; i++)//CHECK # OF ELEMENTS
     {
@@ -64,10 +78,10 @@ void display(int position)
         cont = cont->next;
     }
     cont = first;//RETURN TO THE FIRST ELEMENT
-    
-    if(position > index)
+    */
+    if(position > nElements())
     {
-        printf("***YOUR LIST ONLY HAVE %d ELEMENTS****\n\n",index); 
+        printf("***YOUR LIST ONLY HAVE %d ELEMENTS****\n\n",nElements()); 
     }
     else 
     {
@@ -75,7 +89,7 @@ void display(int position)
         {
             cont = cont->next;
         }
-        printf("Number #%d = %d\n\n",position,cont->num);
+        printf("Number #%d of %d = %d\n\n",position,nElements(),cont->num);
     }
 }
 
@@ -88,10 +102,10 @@ int main()
     do{
         printf("***NUMBER LIST***\n\n");
         printf("1.- Add a number to the beggining of the list.\n");
-        printf("2.- Add a number to the end of the list..\n");
-        printf("3.- Print a member of the list:\n");
-        printf("4.- Display List:\n");
-        printf("5.- Delete a member of the list:\n");
+        printf("2.- Add a number to the end of the list.\n");
+        printf("3.- Print a member of the list.\n");
+        printf("4.- Display List.\n");
+        printf("5.- Delete a member of the list.\n");
         printf("6.- Exit.\n");
         printf("Select an option: ");
         scanf("%d",&option);
@@ -140,7 +154,7 @@ int main()
                 printList();
                 printf("Enter the positon of the number you want to delete: ");
                 scanf("%d",&position);
-                if(position > 0){/*TODO: DELETE FUNCTION*/}
+                if(position > 0 && position <= nElements()){/*TODO: DELETE FUNCTION*/}
                 else{printf("***ERROR***\n\n");}
             }
             main();
