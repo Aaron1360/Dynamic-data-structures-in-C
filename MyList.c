@@ -1,9 +1,11 @@
+/*
+2nd round
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 
-struct list
-{
+struct list{
     int num;
     struct list *next;
 };
@@ -19,81 +21,118 @@ void add(int num,bool select)
     data->next = NULL;
     
     if(first == NULL){first = data;}
-    
-    else if(select == true)
+    else if(select == true)//ADD AT THE TOP OF THE LIST
     {
         data->next = first;
         first = data;
     }
-    
-    else
+    else//ADD AT THE END OF THE LIST
     {
-        list *cont = malloc(sizeof(list));
+        list *cont = NULL;
         cont = first;
-        while(cont->next != NULL)
+        while(cont->next)
         {
-            cont = cont->next;
+            cont=cont->next;
         }
         cont->next = data;
     }
-    
-    printf("\nElement added correctly\n");
+    printf("***NUMBER ADDED SUCCESFULLY***\n\n");
 }
 
 void printList()
 {
-    system("clear");
-    list *temp = malloc(sizeof(list));
-    temp = first;
+    list *print = NULL;
+    print = first;
     
-    if(temp == NULL){printf("\nList empty\n");}
-    
-    for(int i = 1; temp; i++)
+    for(int i = 1; print; i++)
     {
-        printf("Member %d = %d\n",i,temp->num);
-        temp = temp->next;
+        printf("Number #%d = %d\n",i,print->num);
+        print = print->next;
+    }
+    printf("\n");
+}
+
+void display(int position)
+{
+    list *cont = NULL;
+    cont = first;
+    int index = 0;
+    
+    for(int i = 1; cont->next; i++)
+    {
+        index = i;
+        cont = cont->next;
+    }
+    index+=1;
+    printf("# of elements: %d\n\n",index);
+    
+    cont = first;
+    if(position > index)
+        {
+            printf("***YOUR LIST ONLY HAVE %d ELEMENTS****\n\n",index); 
+        }
+    else 
+    {
+        for(int i = 1; i<position; i++)
+        {
+            cont = cont->next;
+        }
+        printf("Number #%d = %d\n\n",position,cont->num);
     }
 }
 
 int main()
 {
     int option = 0;
-    int num = 0;
+    int number = 0;
+    int position = 0;
     
     do{
-        printf("***DYNAMIC LIST***\n\n");
-        printf("1. Add element to the beginning of the list.\n");
-        printf("2. Add element to the end of the list.\n");
-        printf("3. Print list.\n");
-        printf("4. Exit.\n");
-        printf("Option: ");
+        printf("***NUMBER LIST***\n\n");
+        printf("1.- Add a number to the beggining of the list.\n");
+        printf("2.- Add a number to the end of the list..\n");
+        printf("3.- Print a member of the list:\n");
+        printf("4.- Display List:\n");
+        printf("5.- Exit.\n");
+        printf("Select an option: ");
         scanf("%d",&option);
         system("clear");
-    }while(option<1 || option >4);
+    }while(option < 1 || option > 5);
     
     switch(option)
     {
         case 1:
             printf("Enter a number: ");
-            scanf("%d",&num);
-            add(num,true);
+            scanf("%d",&number);
+            add(number,true);
             main();
             break;
         case 2:
             printf("Enter a number: ");
-            scanf("%d",&num);
-            add(num,false);
+            scanf("%d",&number);
+            add(number,false);
             main();
             break;
         case 3:
-            system("clear");
-            printList();
-            printf("\n");
-            main();
+            if(first == NULL){printf("\n***LIST EMPTY***\n\n"); main();}
+            else{
+                printf("Enter the positon of the number you want to see: ");
+                scanf("%d",&position);
+                display(position);
+                main();
+            }
             break;
         case 4:
+            if(first == NULL){printf("\n***LIST EMPTY***\n\n"); main();}
+            else{
+                printf("Display list: \n");
+                printList();
+                main();
+            }
+            break;
+        case 5:
             system("clear");
-            printf("\nProgram finished\n");
+            printf("\n***PROGRAM FINISHED***\n");
             break;
     }
     return 0;
