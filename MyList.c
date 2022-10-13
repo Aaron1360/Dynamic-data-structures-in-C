@@ -91,11 +91,12 @@ int main()
         printf("2.- Add a number to the end of the list..\n");
         printf("3.- Print a member of the list:\n");
         printf("4.- Display List:\n");
-        printf("5.- Exit.\n");
+        printf("5.- Delete a member of the list:\n");
+        printf("6.- Exit.\n");
         printf("Select an option: ");
         scanf("%d",&option);
         system("clear");
-    }while(option < 1 || option > 5);
+    }while(option < 1 || option > 6);
     
     switch(option)
     {
@@ -114,26 +115,38 @@ int main()
             break;
             
         case 3:
-            if(first == NULL){printf("\n***LIST EMPTY***\n\n"); main();}
+            if(first == NULL){printf("\n***LIST EMPTY***\n\n");}
             else{
                 printf("Enter the positon of the number you want to see: ");
                 scanf("%d",&position);
                 if(position > 0){display(position);}
                 else{printf("***ERROR***\n\n");}
-                main();
             }
+            main();
             break;
             
         case 4:
-            if(first == NULL){printf("\n***LIST EMPTY***\n\n"); main();}
+            if(first == NULL){printf("\n***LIST EMPTY***\n\n");}
             else{
-                printf("Display list: \n");
+                printf("Current list: \n");
                 printList();
-                main();
             }
+            main();
+            break;
+        case 5:
+            if(first == NULL){printf("\n***LIST EMPTY***\n\n");}
+            else{
+                printf("Current list: \n");
+                printList();
+                printf("Enter the positon of the number you want to delete: ");
+                scanf("%d",&position);
+                if(position > 0){/*TODO: DELETE FUNCTION*/}
+                else{printf("***ERROR***\n\n");}
+            }
+            main();
             break;
             
-        case 5:
+        case 6:
             system("clear");
             printf("\n***PROGRAM FINISHED***\n");
             break;
