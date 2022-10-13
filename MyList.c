@@ -105,15 +105,17 @@ void delete(int position)
         
         if(temp->next != NULL)
         {
+            cont->next = NULL;
+            free(cont->next);
             temp = temp->next;
-            printf("cont: #%d\n temp: #%d\n\n",cont->num,temp->num);
+            cont->next = temp;
         }
         else
         {
-            printf("cont: #%d \n\n",cont->num);
+            cont->next = NULL;
+            free(cont->next);
         }
-        
-        
+        printf("***DELETED***\n\n");
     }
 }
 
