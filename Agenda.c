@@ -46,7 +46,7 @@ struct SCHEDULE *add(struct SCHEDULE ***agenda,int month,int day)
 
 void printDayList(struct SCHEDULE ***agenda,int month,int day)
 {
-    if(agenda[month][day] == NULL){printf("\nYou are free on that day\n");}
+    if(agenda[month][day] == NULL){printf("\nYou are free on that day\n");}//CHECK FOR ANY TASK
     else
     {
         int i = 1;
@@ -58,6 +58,33 @@ void printDayList(struct SCHEDULE ***agenda,int month,int day)
         }
         printf("\n");
     }
+}
+
+void deleteTask(struct SCHEDULE ***agenda,int month,int day,int position)
+{
+    struct SCHEDULE *cont = NULL, *temp = NULL;
+    cont = agenda[month][day];
+    temp = agenda[month][day]->next;
+    
+    for(int i = 1; i<position-1; i++)
+        {
+            cont = cont->next;
+            temp = temp->next;
+        }
+        
+        if(temp->next != NULL)
+        {
+            cont->next = NULL;
+            free(cont->next);
+            temp = temp->next;
+            cont->next = temp;
+        }
+        else
+        {
+            cont->next = NULL;
+            free(cont->next);
+        }
+        printf("\n***TASK DELETED***\n");
 }
 
 void menu(struct SCHEDULE ***agenda)
@@ -83,11 +110,11 @@ void menu(struct SCHEDULE ***agenda)
             printf("\nEnter date of the new task(MM DD)");
             scanf("%d %d", &month, &day);
             agenda[month][day] = add(agenda,month,day);
-            menu(agenda);
+            menu(agenda);//TODO: FIX MEMORY PROBLEM CAUSED BY CALLING MENU(AGENDA) SEVERAL TIMES
             break;
             
         case 2:
-            //printf("\nTASK DELETED CORRECTLY\n");
+            
             menu(agenda);
             break;
             
