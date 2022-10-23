@@ -62,7 +62,9 @@ void printDayList(struct SCHEDULE ***agenda,int month,int day)
 
 void deleteTask(struct SCHEDULE ***agenda,int month,int day,int position)
 {
-    struct SCHEDULE *cont = NULL, *temp = NULL;
+    //TODO: FIX SEGMENTATION FAULT PROBLEM
+    struct SCHEDULE *cont = malloc(sizeof(struct SCHEDULE));
+    struct SCHEDULE *temp = malloc(sizeof(struct SCHEDULE));
     cont = agenda[month][day];
     temp = agenda[month][day]->next;
     
@@ -85,6 +87,7 @@ void deleteTask(struct SCHEDULE ***agenda,int month,int day,int position)
             free(cont->next);
         }
         printf("\n***TASK DELETED***\n");
+    
 }
 
 void menu(struct SCHEDULE ***agenda)
@@ -92,6 +95,7 @@ void menu(struct SCHEDULE ***agenda)
     int option = 0;
     int month = 0;
     int day = 0;
+    int pos = 0;
     
     do{
         printf("\n***AGENDA***\n\n");
@@ -114,7 +118,12 @@ void menu(struct SCHEDULE ***agenda)
             break;
             
         case 2:
-            
+            printf("\nEnter date (MM DD)");
+            scanf("%d %d", &month, &day);
+            printDayList(agenda,month,day);
+            printf("\nEnter the position of the task: ");
+            scanf("%d",&pos);
+            deleteTask(agenda,month,day,pos);
             menu(agenda);
             break;
             
