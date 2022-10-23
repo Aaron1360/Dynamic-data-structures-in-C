@@ -44,6 +44,22 @@ struct SCHEDULE *add(struct SCHEDULE ***agenda,int month,int day)
     return new;
 }
 
+void printDayList(struct SCHEDULE ***agenda,int month,int day)
+{
+    if(agenda[month][day] == NULL){printf("\nYou are free on that day\n");}
+    else
+    {
+        int i = 1;
+        while(agenda[month][day])
+        {
+            printf("Task #%d = %s\n",i,agenda[month][day]->task);
+            agenda[month][day] = agenda[month][day]->next;
+            i++;
+        }
+        printf("\n");
+    }
+}
+
 void menu(struct SCHEDULE ***agenda)
 {
     int option = 0;
@@ -76,10 +92,9 @@ void menu(struct SCHEDULE ***agenda)
             break;
             
         case 3:
-            /*printf("\nEnter date (MM DD)");
+            printf("\nEnter date (MM DD)");
             scanf("%d %d", &month, &day);
-            printf("\nDATE:%d/%d\nTASK(S): \n%s",month,day,agenda[month][day]->task);
-            */
+            printDayList(agenda,month,day);
             menu(agenda);
             break;
             
@@ -108,7 +123,7 @@ int main()
         
         agenda[i]=malloc(sizeof(struct SCHEDULE*)*days);
         
-        for (int j=0;j<days;j++)agenda[i][j]=NULL;
+        for (int j=0;j<days;j++) agenda[i][j]=NULL;
     }
     
     menu(agenda);
