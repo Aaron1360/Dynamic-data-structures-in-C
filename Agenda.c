@@ -20,7 +20,7 @@ struct SCHEDULE{
 struct SCHEDULE *add()
 {
     char task[50];
-    struct SCHEDULE *new;
+    struct SCHEDULE *new = malloc(sizeof(struct SCHEDULE));
     printf("Type your new task: \n");
     scanf("%s",task);
     strcpy(new->task,task);
@@ -33,10 +33,11 @@ void menu(struct SCHEDULE ***agenda)
 {
     int option = 0;
     int month = 0;
+    char string[3];
     int day = 0;
     
     do{
-        printf("\n***NUMBER LIST***\n\n");
+        printf("\n***AGENDA***\n\n");
         printf("1.- Add new task.\n");
         printf("2.- Delete a task.\n");
         printf("3.- Print task list.\n");
@@ -63,6 +64,7 @@ void menu(struct SCHEDULE ***agenda)
             
         case 3:
             printf("\nYOUR LIST GOES HERE\n");
+            printf("task:\n%s",agenda[1][3]->task);
             menu(agenda);
             break;
             
