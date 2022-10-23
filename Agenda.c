@@ -1,12 +1,4 @@
 /*
-*Desarrollador: Aaron Moreno Villeda
-*Fecha de creación: 29/09/2022
-*
-*1.-Debes crear un array con 12 elementos, uno por cada mes del año, cada elemento debe tener a su vez un array con tantos elementos como días tenga dicho mes. 
-*Es decir, la posicion 0 del array, que correspondería a enero, debería tener 31 elementos para los 31 días correspondientes. 
-*Finalmente cada uno de esos elementos debe contener un puntero a un struct. Ese struct constituiría el inicio de la lista de tareas que habría en cada día 
-*de la agenda.
-*
 *Fecha de creación: 23/10/2022
 *
 *2.-Desarrolla un menu igual que el que hemos creado en el ejemplo de la lista de la compra, 
@@ -19,10 +11,48 @@
 #include <stdlib.h>
 
 //data type alocated on each position of the array 
-    struct SCHEDULE{
-        char task[50];
-        struct SCHEDULE* next;
-    };
+struct SCHEDULE{
+    char task[50];
+    struct SCHEDULE* next;
+};
+
+void menu()
+{
+    int option = 0;
+    do{
+        printf("\n***NUMBER LIST***\n\n");
+        printf("1.- Add new task.\n");
+        printf("2.- Delete a task.\n");
+        printf("3.- Print task list.\n");
+        printf("4.- Exit.\n");
+        printf("Select an option: ");
+        scanf("%d",&option);
+        system("clear");
+    }while(option < 1 || option > 4);
+    
+    switch(option)
+    {
+        case 1:
+            printf("\nTASK ADDED CORRECTLY\n");
+            menu();
+            break;
+            
+        case 2:
+            printf("\nTASK DELETED CORRECTLY\n");
+            menu();
+            break;
+            
+        case 3:
+            printf("\nYOUR LIST GOES HERE\n");
+            menu();
+            break;
+            
+        case 4:
+            system("clear");
+            printf("\n***PROGRAM FINISHED***\n");
+            break;
+    }
+}
 
 int main()
 {
@@ -32,7 +62,6 @@ int main()
         char task[50];
         struct SCHEDULE* next;
     };*/
-    int option = 0;
     
     //static pointer array with 12 elements
     struct SCHEDULE ***agenda=malloc(sizeof(struct SCHEDULE**)*12);
@@ -52,32 +81,7 @@ int main()
         for (int j=0;j<days;j++) agenda[i][j]=NULL;
     }
     
-    do{
-        printf("***NUMBER LIST***\n\n");
-        printf("1.- Add new task.\n");
-        printf("2.- Delete a task.\n");
-        printf("3.- Print task list.\n");
-        printf("4.- Exit.\n");
-        printf("Select an option: ");
-        scanf("%d",&option);
-        system("clear");
-    }while(option < 1 || option > 4);
+    menu();
     
-    switch(option)
-    {
-        case 1:
-            break;
-            
-        case 2:
-            break;
-            
-        case 3:
-            break;
-            
-        case 4:
-            system("clear");
-            printf("\n***PROGRAM FINISHED***\n");
-            break;
-    }
   return 0;
 }
