@@ -28,20 +28,25 @@ void add(int num,bool select)
     }
     else//ADD AT THE END OF THE LIST
     {
-        list *cont = NULL;
+        list *cont = malloc(sizeof(list));
         cont = first;
         while(cont->next)
         {
             cont=cont->next;
         }
         cont->next = data;
+        cont = NULL;
+        free(cont);
     }
+
+    data = NULL;
+    free(data);
     printf("***NUMBER ADDED SUCCESFULLY***\n\n");
 }
 
 void printList()
 {
-    list *print = NULL;
+    list *print = malloc(sizeof(list));
     print = first;
     
     for(int i = 1; print; i++)
@@ -49,27 +54,36 @@ void printList()
         printf("Number #%d = %d\n",i,print->num);
         print = print->next;
     }
+    print = NULL;
+    free(print);
     printf("\n");
 }
 
 int nElements()
 {
-    list *cont = NULL;
+    list *cont = malloc(sizeof(list));
     cont = first;
     int index = 0;
 
-    for(int i = 1; cont; i++)
+    /*for(int i = 1; cont; i++)
     {
         index = i;
         cont = cont->next;
+    }*/
+    while(cont)
+    {
+        index++;
+        cont = cont->next;
     }
+    cont = NULL;
+    free(cont);
     return index;
     
 }
 
 void display(int position)
 {
-    list *cont = NULL;
+    list *cont = malloc(sizeof(list));
     cont = first;
     
     if(position > nElements())
@@ -84,13 +98,18 @@ void display(int position)
         }
         printf("Number #%d = %d\n\n",position,cont->num);
     }
+    cont = NULL;
+    free(cont);
 }
 
 void delete(int position)
 {
-    list *cont = NULL,*temp = NULL;
+    list *cont = malloc(sizeof(list));
+    list *temp = malloc(sizeof(list)); 
     cont = first;
     temp = first->next;
+
+    int num = 0;
     if(position > nElements())
     {
         printf("***YOUR LIST ONLY HAVE %d ELEMENTS****\n\n",nElements()); 
@@ -105,17 +124,35 @@ void delete(int position)
         
         if(temp->next != NULL)
         {
+            num = cont->num;
             cont->next = NULL;
             free(cont->next);
             temp = temp->next;
             cont->next = temp;
         }
         else
-        {
+        {   
+            num = cont->num;
             cont->next = NULL;
             free(cont->next);
         }
-        printf("***DELETED***\n\n");
+        printf("***NUMBER %d DELETED***\n\n",num);
+    }
+    cont = NULL;
+    temp = NULL;
+    free(cont);
+    free(temp);
+}
+
+void CleanUp(list *node)
+{
+    list *next;
+    printf("\n");
+    while(node)
+    {
+        next = node->next;
+        free(node);
+        node = next;
     }
 }
 
@@ -124,7 +161,6 @@ int main()
     int option = 0;
     int number = 0;
     int position = 0;
-    
     do{
         printf("***NUMBER LIST***\n\n");
         printf("1.- Add a number to the beggining of the list.\n");
@@ -132,11 +168,12 @@ int main()
         printf("3.- Print a member of the list.\n");
         printf("4.- Display List.\n");
         printf("5.- Delete a member of the list.\n");
-        printf("6.- Exit.\n");
+        printf("6.- Create default list.\n");
+        printf("7.- Exit.\n");
         printf("Select an option: ");
         scanf("%d",&option);
-        system("clear");
-    }while(option < 1 || option > 6);
+        system("cls");
+    }while(option < 1 || option > 7);
     
     switch(option)
     {
@@ -187,7 +224,18 @@ int main()
             break;
             
         case 6:
-            system("clear");
+            system("cls");
+            add(1,true);
+            add(2,true);
+            add(3,true);
+            system("cls");
+            printf("***DEFAULT LIST CREATED***\n\n");
+            main();
+            break;
+        case 7:
+            system("cls");
+            CleanUp(first);
+            first = NULL;
             printf("\n***PROGRAM FINISHED***\n");
             break;
     }

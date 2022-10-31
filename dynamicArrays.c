@@ -40,39 +40,39 @@ void dosd()
   
   for(int i=0;i<5;i++)
   {
-      for(int j=0;j<3;j++)
-      {
-          p[i][j]=pow(i+1,j+1);
-          printf("%3d  ",p[i][j]);
-      }
-      printf("\n");
+    for(int j=0;j<3;j++)
+    {
+      p[i][j]=pow(i+1,j+1);
+      printf("%3d  ",p[i][j]);
+    }
+    printf("\n");
   }
   free(p);//DON´T FORGET TO FREE MEMORY
 }
 void dynamic()
 {
-    int size;
-    printf("enter size: ");
-    scanf("%d",&size);
-    int **p=malloc(sizeof(int*)*size);//2D dynamic array
-    int *cols=malloc(sizeof(int)*size);//save # of cols 
-    
-    for(int i=0;i<size;i++)
+  int size;
+  printf("enter size: ");
+  scanf("%d",&size);
+  int **p=malloc(sizeof(int*)*size);//2D dynamic array
+  int *cols=malloc(sizeof(int)*size);//save cols sizes (example: size=3 -> col[0]=4, col[1]=7, col[2]=2 )
+  
+  for(int i=0;i<size;i++)
+  {
+    printf("\nenter # of cols in [%d]: ",i+1);
+    scanf("%d",&cols[i]);
+    p[i]=malloc(sizeof(int)*cols[i]);
+  }
+  
+  for(int i=0;i<size;i++)
+  {
+    for(int j=0;j<cols[i];j++)
     {
-        printf("\nenter # of cols in [%d]: ",i+1);
-        scanf("%d",&cols[i]);
-        p[i]=malloc(sizeof(int)*cols[i]);
+      p[i][j]=pow(i+1,j+1);
+      printf("%3d ",p[i][j]);
     }
-    
-    for(int i=0;i<size;i++)
-    {
-        for(int j=0;j<cols[i];j++)
-        {
-            p[i][j]=pow(i+1,j+1);
-            printf("%3d ",p[i][j]);
-        }
-        printf("\n\n");
-    }
-    free(p);//DON´T FORGET TO FREE MEMORY
-    free(cols);
+    printf("\n\n");
+  }
+  free(p);//DON´T FORGET TO FREE MEMORY
+  free(cols);
 }

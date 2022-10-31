@@ -59,8 +59,6 @@ void insertElementList(char product[20],int account)
     item=NULL;
     free(article);
     free(item);
-    
-   
 }
 
 void addElementList()
@@ -85,7 +83,8 @@ void removeElementList()
    int num;
    printf("Type the number of the article you want to remove: ");
    scanf("%d",&num);
-   system("clear");
+   system("cls");
+   //system("clear");
    if(num == 1 && shoppingList != NULL){shoppingList = shoppingList->next;}
    else
    {
@@ -149,7 +148,8 @@ void callMenuList()
         printf("5.- Exit.\n");
         printf("Type the option: ");
         scanf("%d",&option);
-        system("clear");
+        system("cls");
+        //system("clear");
     }while(option < 1 || option > 5);
     
     switch(option)
@@ -167,7 +167,7 @@ void callMenuList()
             createList();
             break;
         case 5:
-            system("clear");
+            system("cls");
             printf("\n\tPROGRAM FINISHED\n");
             break;
     }
