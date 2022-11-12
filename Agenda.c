@@ -105,7 +105,7 @@ void menu(struct SCHEDULE ***agenda)
         printf("4.- Exit.\n");
         printf("Select an option: ");
         scanf("%d",&option);
-        system("clear");
+        system("cls");
     }while(option < 1 || option > 4);
     
     switch(option)
@@ -135,7 +135,7 @@ void menu(struct SCHEDULE ***agenda)
             break;
             
         case 4:
-            system("clear");
+            system("cls");
             printf("\n***PROGRAM FINISHED***\n");
             break;
     }
