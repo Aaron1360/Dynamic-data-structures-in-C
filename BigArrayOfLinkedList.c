@@ -1,3 +1,10 @@
+/*
+DEVELOPER: AARON MORENO VILLEDA
+DATE: 13/11/22
+Create multiple arrays of linked lists with different lenghts to simulate the concept of an agenda with 
+different tasks for each day.
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -11,7 +18,8 @@ int main()
     //DIMENSIONS
     int monthNum = 2;
     int days[]={1,2};
-    int tasks[]={2,4,3};
+    int tasks[]={2,1,3};
+    int number = 0;
     int taskNum = 0;
 
     //STATIC POINTER ARRAY (YEAR)
@@ -31,7 +39,6 @@ int main()
     */
 
     //TRAVERSE THE ARRAY
- 
     for(int i = 0; i < monthNum; i++)
     {
         for(int j = 0; j < days[i]; j++)
@@ -42,14 +49,28 @@ int main()
                 test *new = malloc(sizeof(test));
                 if(new != NULL)//CHECK CORRECT MEMORY ALOCATION
                 {
-                    new->number = 13;
+                    printf("enter a number: ");
+                    scanf("%d",&number);
+                    new->number = number;
                     new->next = NULL;
 
                     if(head[i][j] == NULL){head[i][j] = new;}//CREATE NEW LIST IF THE DAY IS EMPTY
-                    else //ADD AT THE TOP OF THE LIST
+                    else 
                     {
+                        /*//ADD AT THE TOP OF THE LIST
                         new->next = head[i][j];
-                        head[i][j] = new;
+                        head[i][j] = new;*/
+
+                        //ADD AT THE END OF THE LIST
+                        test *cont = malloc(sizeof(test));
+                        cont = head[i][j];
+                        while(cont->next)
+                        {
+                            cont=cont->next;
+                        }
+                        cont->next = new;
+                        cont = NULL;
+                        free(cont);
                     }
                     //printf("NUMBER ALOCATED\n");
                 }
@@ -62,10 +83,12 @@ int main()
                 free(new);
             }
             taskNum++;
-            printf("\n");
+            //printf("\n");
         }
     }
 
+    printf("\n");
+    
     //PRINT ALL DAYS
     for(int i = 0; i < monthNum; i++)
     {
@@ -83,8 +106,6 @@ int main()
             printf("\n");
         }
     }
-    //TODO: check if memory is cleaned correctly
-
 
     //CLEAN UP MEMORY
     for(int i = 0; i < monthNum; i++)
@@ -94,7 +115,7 @@ int main()
             int cont = 1;
             test *temp = head[i][j];
             test *next;
-            printf("\nCLEANING [%d][%d]\n",i,j);
+            printf("\nCLEANING [%d][%d]\n",i,j);// JUST TO VISUALIZE 
 
             while(temp)
             {
@@ -104,7 +125,6 @@ int main()
                 printf("task: %d\n",cont);
                 cont++;
             }
-            
         }
     }
 

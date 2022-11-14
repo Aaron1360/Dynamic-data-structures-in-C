@@ -1,3 +1,9 @@
+/*
+DEVELOPER: AARON MORENO VILLEDA
+DATE: 13/11/22
+Create an array of linked lists with the same lenght.
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 // STRUCTURE OF LINKED LIST

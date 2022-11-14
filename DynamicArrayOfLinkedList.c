@@ -1,3 +1,9 @@
+/*
+DEVELOPER: AARON MORENO VILLEDA
+DATE: 13/11/22
+Create an array of linked lists with diferent lenghts.
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 // STRUCTURE OF LINKED LIST
@@ -54,7 +60,7 @@ int main()
         }
         printf("\n");
     }
-    
+
     //CLEAN UP MEMORY
     for(int i = 0; i < size; i++)
     {
