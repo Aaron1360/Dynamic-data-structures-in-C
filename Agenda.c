@@ -11,11 +11,80 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct SCHEDULE{
-    char task[50];
-    struct SCHEDULE* next;
-};
+#define MONTHS 12
+#define MAX_LIMIT 20
 
+typedef struct SCHEDULE{
+    char task[MAX_LIMIT];
+    struct SCHEDULE* next;
+}SCHEDULE;
+
+void callMenu();
+
+int main()
+{
+    //STATIC POINTER ARRAY WITH 12 ELEMENTS (MONTHS)
+    SCHEDULE ***agenda = malloc(sizeof(SCHEDULE**) * MONTHS);
+    int days = 0;
+    
+    //DYNAMIC ALOCATION BASED ON THE # OF DAYS
+    for(int i = 0; i < MONTHS; i++)
+    {
+        switch (i+1) {
+            case 1: case 3:  case 5: case 7: case 8: case 10: case 12 : days = 31; break;
+            case 4: case 6: case 9:  case 11: days = 30; break;
+            default: days = 28;
+        }
+        agenda[i] = malloc(sizeof(struct SCHEDULE*[days]));//ALOCATE MEMORY FOR EACH DAY
+        for (int j=0;j<days;j++) agenda[i][j]=NULL;//SET EVERYDAY TO NULL
+    }
+    
+    callMenu();
+
+  return 0;
+}
+
+void callMenu()
+{
+    int option = 0,month = 0,day = 0,pos = 0;
+
+     do{
+        printf("\n***AGENDA***\n\n");
+        printf("1.- Add new task.\n");
+        printf("2.- Delete a task.\n");
+        printf("3.- Print task list.\n");
+        printf("4.- Exit.\n");
+        printf("Select an option: ");
+        scanf("%d",&option);
+        system("cls");
+    }while(option < 1 || option > 4);
+    
+    switch(option)
+    {
+        case 1:
+            /*
+            ************THIS GOES INSIDE ADD FUNCTION*****************
+            char temp[MAX_LIMIT];
+            struct SCHEDULE *new = malloc(sizeof(SCHEDULE));
+            printf("type your task: ");
+            fgets(temp,MAX_LIMIT,stdin);
+            printf("%s",temp);*/  
+            break;
+            
+        case 2:
+            break;
+            
+        case 3:
+            break;
+            
+        case 4:
+            system("cls");
+            printf("\n***PROGRAM FINISHED***\n");
+            break;
+    }
+}
+
+/*
 struct SCHEDULE *add(struct SCHEDULE ***agenda,int month,int day)
 {
     char task[50];
@@ -140,29 +209,4 @@ void menu(struct SCHEDULE ***agenda)
             break;
     }
 }
-
-
-int main()
-{
-    //STATIC POINTER ARRAY WITH 12 ELEMENTS (MONTHS)
-    struct SCHEDULE ***agenda=malloc(sizeof(struct SCHEDULE**)*12);
-    int days;
-    
-    //DYNAMIC ALOCATION BASED ON THE # OF DAYS
-    for(int i = 0;i<12;i++)
-    {
-        switch (i+1) {
-            case 1: case 3:  case 5: case 7: case 8: case 10: case 12 : days = 31; break;
-            case 4: case 6: case 9:  case 11: days = 30; break;
-            default: days = 28;
-        }
-        
-        agenda[i]=malloc(sizeof(struct SCHEDULE*)*days);
-        
-        for (int j=0;j<days;j++) agenda[i][j]=NULL;
-    }
-    
-    menu(agenda);
-    
-  return 0;
-}
+*/
