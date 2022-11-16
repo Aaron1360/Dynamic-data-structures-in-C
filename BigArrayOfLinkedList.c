@@ -16,14 +16,13 @@ typedef struct test{
 int main()
 {
     //DIMENSIONS
-    int monthNum = 2;
-    int days[]={1,2};
-    int tasks[]={2,1,3};
-    int number = 0;
+    int monthNum = 12;
+    int days[]={1,1,1,1,1,1,1,1,1,1,2,2};
+    int tasks[]={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
     int taskNum = 0;
-
+    int countDays = 1;
     //STATIC POINTER ARRAY (YEAR)
-    test ***head = malloc(sizeof(test**)*monthNum);//ALOCATE MEMORY FOR AS MANY POINTERS TO POINTER AS # OF MONTHS
+    test ***head = malloc(sizeof(test**[monthNum]));//ALOCATE MEMORY FOR AS MANY POINTERS TO POINTER AS # OF MONTHS
 
     //INITIALIZE POINTERS TO POINTER ARRAY (MONTHS)
     for(int i = 0; i < monthNum; i++)
@@ -49,9 +48,7 @@ int main()
                 test *new = malloc(sizeof(test));
                 if(new != NULL)//CHECK CORRECT MEMORY ALOCATION
                 {
-                    printf("enter a number: ");
-                    scanf("%d",&number);
-                    new->number = number;
+                    new->number = 25;
                     new->next = NULL;
 
                     if(head[i][j] == NULL){head[i][j] = new;}//CREATE NEW LIST IF THE DAY IS EMPTY
@@ -94,7 +91,7 @@ int main()
     {
         for(int j = 0; j < days[i]; j++)
         {
-            printf("MONTH [%d] DAY [%d]\n",i,j);           
+            printf("%d.-\tMONTH [%d] DAY [%d]\n",countDays++,i,j);           
             test *temp = head[i][j];
             while(temp != NULL)
             {
@@ -105,6 +102,7 @@ int main()
             free(temp);
             printf("\n");
         }
+        printf("\n");
     }
 
     //CLEAN UP MEMORY
@@ -127,7 +125,6 @@ int main()
             }
         }
     }
-
     printf("\n***PROGRAM FINISHED***\n");
     return 0;
 }
