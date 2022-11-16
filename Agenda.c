@@ -125,6 +125,7 @@ void addTasks(int month,int day)
         new->next = NULL;
         
         if(agenda[month][day] == NULL){agenda[month][day] = new;}//CREATE NEW SCHEDULE IF THE DAY IS EMPTY
+        
         else //ADD AT THE END OF THE SCHEDULE
         {
             SCHEDULE *cont = malloc(sizeof(SCHEDULE));
@@ -155,14 +156,14 @@ void deleteTasks(int month,int day)
     scanf("%d",&pos);
     SCHEDULE *cont = agenda[month][day];
 
-    if(pos == 1 && cont != NULL)
+    if(pos == 1 && cont != NULL)//DELETE FIRST TASK
     {
         agenda[month][day] = agenda[month][day]->next;
         cont = NULL;
         free(cont);
     }
 
-    else
+    else//DELETE ANY OTHER TASK
     {
         SCHEDULE *temp = cont->next;
         for(int i = 1; i<pos-1; i++)
