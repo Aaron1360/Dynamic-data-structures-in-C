@@ -31,19 +31,19 @@ int main()
 {
     //STATIC POINTER ARRAY WITH 12 ELEMENTS (MONTHS)
     agenda = malloc(sizeof(SCHEDULE**[MONTHS]));
-    int dayspos = 0;
+    int daysNum = 0;
     
     //DYNAMIC ALOCATION BASED ON THE # OF DAYS
     for(int i = 0; i < MONTHS; i++)
     {
         switch (i+1) {
-            case 1: case 3:  case 5: case 7: case 8: case 10: case 12 : dayspos = 31; break;
-            case 4: case 6: case 9:  case 11: dayspos = 30; break;
-            default: dayspos = 28;
+            case 1: case 3:  case 5: case 7: case 8: case 10: case 12 : daysNum = 31; break;
+            case 4: case 6: case 9:  case 11: daysNum = 30; break;
+            default: daysNum = 28;
         }
-        agenda[i] = malloc(sizeof(SCHEDULE*[dayspos]));//ALOCATE MEMORY FOR EACH DAY
+        agenda[i] = malloc(sizeof(SCHEDULE*[daysNum]));//ALOCATE MEMORY FOR EACH DAY
 
-        for (int j = 0;j < dayspos; j++) agenda[i][j]=NULL;//SET EVERYDAY TO NULL
+        for (int j = 0;j < daysNum; j++) agenda[i][j]=NULL;//SET EVERYDAY TO NULL
     }
     
     callMenu();
@@ -57,8 +57,8 @@ void callMenu()
      do{
         printf("\n***AGENDA***\n\n");
         printf("1.- Add new task.\n");
-        printf("2.- Delete a task.\n");
-        printf("3.- Print task SCHEDULE.\n");
+        printf("2.- Delete tasks.\n");
+        printf("3.- Print tasks.\n");
         printf("4.- Exit.\n");
         printf("Select an option: ");
         scanf("%d",&option);
@@ -138,13 +138,13 @@ void addTasks(int month,int day)
             cont = NULL;
             free(cont);
         }
-        printf("\n***NEW TASK ADDED ON [%d]/[%d]***\n", day,month);
+        printf("\n***NEW TASK ADDED***\n");
         new = NULL;
         free(new);
     }
     else
     {
-        printf("\n¡¡¡¡ALOCATION FAILURE!!!\n");
+        printf("\n***ALOCATION FAILURE***\n");
     }
 }
 
