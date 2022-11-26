@@ -151,46 +151,49 @@ void addTasks(int month,int day)
 void deleteTasks(int month,int day)
 {
     int pos = 0;
-
-    printf("\nType the # of the task you want to delete: ");
-    scanf("%d",&pos);
     SCHEDULE *cont = agenda[month][day];
 
-    if(pos == 1 && cont != NULL)//DELETE FIRST TASK
+    if(cont != NULL)
     {
-        agenda[month][day] = agenda[month][day]->next;
+        printf("\nType the # of the task you want to delete: ");
+        scanf("%d",&pos);
+        
+        if(pos == 1 && cont != NULL)//DELETE FIRST TASK
+        {
+            agenda[month][day] = agenda[month][day]->next;
+            cont = NULL;
+            free(cont);
+        }
+
+        else//DELETE ANY OTHER TASK
+        {
+            SCHEDULE *temp = cont->next;
+            for(int i = 1; i<pos-1; i++)
+            {
+                cont = cont->next;
+                temp = temp->next;
+            }
+            
+            if(temp->next != NULL)
+            {
+                cont->next = NULL;
+                free(cont->next);
+                temp = temp->next;
+                cont->next = temp;
+            }
+            else
+            {
+                cont->next = NULL;
+                free(cont->next);
+            }
+            temp = NULL;
+            free(temp);
+        }
+
         cont = NULL;
         free(cont);
+        printf("\nTASK DELETED");
     }
-
-    else//DELETE ANY OTHER TASK
-    {
-        SCHEDULE *temp = cont->next;
-        for(int i = 1; i<pos-1; i++)
-        {
-            cont = cont->next;
-            temp = temp->next;
-        }
-        
-        if(temp->next != NULL)
-        {
-            cont->next = NULL;
-            free(cont->next);
-            temp = temp->next;
-            cont->next = temp;
-        }
-        else
-        {
-            cont->next = NULL;
-            free(cont->next);
-        }
-        temp = NULL;
-        free(temp);
-    }
-
-    cont = NULL;
-    free(cont);
-    printf("\nTASK DELETED");
 }
 
 void printTasks(int month,int day)
