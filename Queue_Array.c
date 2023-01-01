@@ -1,6 +1,6 @@
 /*
 *DEVELOPER: AARON MORENO VILLEDA
-*DATE: 25/12/22
+*DATE: 01/01/23
 *
 *Create a dynamic array with as many elements as boxes the user indicates.
 */
@@ -10,109 +10,50 @@
 #include <string.h>
 #include <conio.h>
 
-//STRUCTURE OF QUEUE 
+#define MAX_LIMIT 20
+
+//QUEUE STRUCT FOR EACH CHECKOUT BOX 
 typedef struct QUEUE
 {
-  char name[15];
+  char name[MAX_LIMIT];
   struct QUEUE *prev;
 }QUEUE;
 
-void userInput(int *boxes);
-void showAllQueues(int *boxes,QUEUE **head);
-void showQueue(int *boxNum,QUEUE **head);
-void addElementQueue(int *boxNum,QUEUE **head);
-void removeElementQueue(int *boxNum,QUEUE **head);
-void showMenu(int *boxes,QUEUE **head);
-void CleanUp(int *boxes,QUEUE **head);
+QUEUE **CheckOutCounter = NULL;
+
+void callMenu();
+void addCustomer();
+void createDefaultCustomersList();
+void serveCustomer();
+void printQueue();
 
 int main()
 {
-    int boxes = 0;
-    userInput(&boxes);
-    QUEUE **head = malloc(sizeof(QUEUE*[boxes]));// ARRAY OF POINTERS TO QUEUE STRUCT 
-    //printf("\nboxes: %d",boxes);
-    for(int i = 0; i < boxes; i++) {head[i] = NULL;} //INITIALIZE POINTER ARRAY TO NULL
-    showMenu(&boxes,head);
-
+    int boxNum;    
+    printf("****SUPERMARKET BOX MANAGER****\n\n");
+    printf("Enter # of boxes: ");
+    scanf("%d", &boxNum);
+    
+    // ARRAY OF POINTERS TO QUEUE STRUCT 
+    CheckOutCounter = malloc(sizeof(QUEUE*[boxNum]));
+    //INITIALIZE POINTER ARRAY TO NULL
+    for(int i = 0; i < boxNum; i++) {CheckOutCounter[i] = NULL;}
+    system("cls");
+    callMenu();
     return 0;
 }
 
-void userInput(int *boxes)
+void callMenu()
 {
-    printf("ENTER THE NUMBER OF BOXES IN THE SUPERMARKET: ");
-    scanf("%d", boxes);
-}
-
-void showAllQueues(int *boxes,QUEUE **head)
-{
-    //TODO: CHECK IF HEAD IS NULL, FIX TAB AND SPACE ERROR
-    for(int i = 0; i < *boxes; i++)
-    {
-        QUEUE *temp = head[i];
-        printf("%d\t",i);
-        while(temp != NULL)
-        {
-            printf("--%s",temp->name);
-            temp = temp->prev;
-        }
-        printf("\n");
-    }
-    printf("\n");
-}
-
-void showQueue(int *boxNum,QUEUE **head)
-{
-    //TODO: CHECK IF HEAD IS NULL, FIX TAB AND SPACE ERROR
-    QUEUE *temp = head[*boxNum];
-        printf("%d",*boxNum);
-        while(temp != NULL)
-        {
-            printf("--%s",temp->name);
-            temp = temp->prev;
-        }
-    printf("\n");
-}
-
-void addElementQueue(int *boxNum,QUEUE **head)
-{
-    char temp[15];
-    QUEUE *client = malloc(sizeof(QUEUE));
-    printf("Enter the name of the new client: ");
-    fflush(stdin);
-    scanf("%s",temp);
-    strcpy(client->name,temp);
-    client->prev = NULL;
-
-    if(head[*boxNum] == NULL){ head[*boxNum] = client;}
-    else
-    {
-        QUEUE *aux = head[*boxNum];
-        while(aux->prev != NULL){ aux = aux->prev;}
-        aux->prev = client;
-    }
-    printf("\nNew client added.\n");
-    getch();
-    system("cls");
-}
-
-void removeElementQueue(int *boxNum,QUEUE **head)
-{
-
-}
-
-void showMenu(int *boxes,QUEUE **head)
-{
-    //TODO: FIX OPTIONS 2,3,4 PROBLEM WITH DO WHILE LOOP
-    fflush(stdin);
-    int option = 0, boxNum = 0;
+    int option = 0;
     do
     {
-        printf("****MANAGER OF QUEUES ARRAY****\n\n");
-        printf("1.- Show all queues.\n");
-        printf("2.- Show an especific queue.\n");
-        printf("3.- Add customer to queue.\n");
-        printf("4.- Serve customer.\n");
-        printf("5.- Exit.\n");
+        printf("****SUPERMARKET BOX MANAGER****\n\n");
+        printf("1.- Print queue\n");
+        printf("2.- Add customer to queue\n");
+        printf("3.- Serve customer\n");
+        printf("4.- Create Default List\n");
+        printf("5.- Exit\n");
         printf("Select an option: ");
         scanf("%d", &option);
         system("cls");
@@ -121,58 +62,127 @@ void showMenu(int *boxes,QUEUE **head)
     switch(option)
     {
         case 1: 
-            showAllQueues(boxes,head);
-            showMenu(boxes,head);
+            printQueue();
+            callMenu();
             break;
-        case 2:
-            do
-            {
-                printf("\nENTER THE BOX NUMBER: \n");
-                scanf("%d",&boxNum);
-                system("cls");
-            } while (boxNum < 0 || boxNum > *boxes);
-            showQueue(&boxNum,head);
-            showMenu(boxes,head);
+        case 2: 
+            addCustomer();
+            callMenu();
             break;
         case 3: 
-            do
-            {
-                printf("\nENTER THE BOX NUMBER WHERE YOU WANT ADD A CUSTOMER: \n");
-                scanf("%d",&boxNum);
-                system("cls");
-            } while (boxNum < 0 || boxNum > *boxes);
-            addElementQueue(&boxNum,head);
-            showMenu(boxes,head);
+            serveCustomer();
+            callMenu();
             break;
         case 4: 
-            do
-            {
-                printf("\nENTER THE BOX NUMBER WHERE YOU WANT SERVE A CUSTOMER: \n");
-                scanf("%d",&boxNum);
-                system("cls");
-            } while (boxNum < 0 || boxNum > *boxes);
-            removeElementQueue(&boxNum,head);
-            showMenu(boxes,head);
+            createDefaultCustomersList();
+            callMenu();
             break;
         case 5: 
-            CleanUp(boxes,head);
             printf("\nPROGRAM FINISHED\n");
             break;
     }
 }
 
-void CleanUp(int *boxes,QUEUE **head)
+void addCustomer()
 {
-    for(int i = 0; i < *boxes; i++)
-    {
-        QUEUE *temp = head[i];
-        QUEUE *prev;
+    int bNum = 0;
+    char temp[MAX_LIMIT];
+    QUEUE *client = malloc(sizeof(QUEUE));
 
-        while(temp)
+    printf("****SUPERMARKET BOX MANAGER****\n\n");
+    printf("Enter the box #: ");
+    scanf("%d",&bNum);
+
+    if(client != NULL)//CHECK FOR CORRECT MEMORY ALOCATION
+    {
+        printf("Type the name of your new client: ");
+        fflush(stdin);
+        scanf("%[^\n]",temp);
+        strcpy(client->name,temp);
+        client->prev = NULL;
+
+        if(CheckOutCounter[bNum] == NULL){CheckOutCounter[bNum] = client;}//ADD NEW CLIENT TO THE EMPTY QUEUE
+        else
         {
-            prev = temp->prev;
-            free(temp);
-            temp = prev;
-        }
+            QUEUE *aux = CheckOutCounter[bNum];
+            while(aux->prev != NULL){ aux = aux->prev;}
+            aux->prev = client;
+            aux = NULL;
+            free(aux);
+        } 
+        printf("\nNew client added.\n");
+        getch();
+        system("cls");
     }
+    else
+    {
+        printf("\n***ALOCATION FAILURE***\n\n");
+    }
+    client = NULL;
+    free(client);
+}
+
+void createDefaultCustomersList()
+{
+    for(int i = 0; i < 3; i++)
+    {
+        QUEUE *client = malloc(sizeof(QUEUE));
+        strcpy(client->name,"Client");
+        client->prev = CheckOutCounter[0];
+        CheckOutCounter[0] = client;
+    }
+    printf("****SUPERMARKET BOX MANAGER****\n\n");
+    printf("Default list added on box #0");
+    getch();
+    system("cls");
+}
+
+void serveCustomer()
+{
+    int bNum = 0;
+
+    printf("****SUPERMARKET BOX MANAGER****\n\n");
+    printf("Enter the box #: ");
+    scanf("%d",&bNum);
+
+    if(CheckOutCounter[bNum])
+    {
+        printf("\n%s was served\n",CheckOutCounter[bNum]->name);
+        QUEUE *aux = malloc(sizeof(QUEUE));
+        aux = CheckOutCounter[bNum];
+        CheckOutCounter[bNum] = CheckOutCounter[bNum]->prev;
+        aux->prev = NULL;
+        aux = NULL;
+        free(aux);
+    }
+    else
+    {
+        printf("\nQUEUE EMPTY!\n");
+    }
+    getch();
+    system("cls");
+}
+
+void printQueue()
+{
+    int bNum = 0;
+    printf("****SUPERMARKET BOX MANAGER****\n\n");
+    printf("Enter the box #: ");
+    scanf("%d",&bNum);
+    
+    if(CheckOutCounter[bNum] == NULL){printf("\nThe queue is empty");}
+    else
+    {
+        printf("\nCustomers on checkOutCounter #%d: \n",bNum);
+        QUEUE *temp = CheckOutCounter[bNum];
+        for(int i = 1; temp; i++)
+        {
+            printf("Position %d: %s\n",i,temp->name);
+            temp = temp->prev;
+        }
+        temp = NULL;
+        free(temp);
+    }
+    getch();
+    system("cls");
 }
