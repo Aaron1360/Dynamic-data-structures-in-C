@@ -70,11 +70,13 @@ int nElements()
         index = i;
         cont = cont->next;
     }*/
+
     while(cont)
     {
         index++;
         cont = cont->next;
     }
+    
     cont = NULL;
     free(cont);
     return index;
