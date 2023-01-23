@@ -91,12 +91,16 @@ void addArticleToStock()
     scanf("%s",prod);
 
     STOCK *add = malloc(sizeof(STOCK));
-    strcpy(add->article,prod);
+    /* strcpy(add->article,prod);
     add->next = NULL;
-    add->managementArticle = NULL;
+    add->managementArticle = NULL; */
 
     if(add != NULL)
     {
+        strcpy(add->article,prod);
+        add->next = NULL;
+        add->managementArticle = NULL;
+
         if(head == NULL){head = add;}
         else
         {
@@ -128,7 +132,7 @@ void deleteArticleFromStock(int index)
         printStockList();
 
         int prodNum = 0;
-        printf("\nENTER ARTICLE NUMBER: \n");
+        printf("\nENTER ARTICLE #: \n");
         scanf("%d",&prodNum);
 
         if(prodNum > 0 && prodNum <= index)//INDEX BETWEEN RANGE

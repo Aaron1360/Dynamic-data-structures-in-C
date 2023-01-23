@@ -56,7 +56,6 @@ int main()
         case 3: 
             system("cls");
             removeProducts();
-            getch();
             main();
             break;
         case 4: 
