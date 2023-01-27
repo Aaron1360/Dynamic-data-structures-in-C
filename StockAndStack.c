@@ -1,108 +1,184 @@
-/*
-*DESARROLLADOR: AARON MORENO VILLEDA
-*FECHA: 01/01/23
-*
-*SUPERMARKET PRODUCT MANAGER
-*/
+/* 
+* Desarrollador: Aaron Moreno Villeda
+* Fecha: 26/01/23
+* Desarrolla la logica de administracion de los productos ofrecidos
+ */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <string.h>
-#include <conio.h>
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<conio.h>
+#include<stdbool.h>
+#include<time.h>
 
-#define MAX_LIM 25
+#define _BUFFER 25/* max lenght  */
 
-typedef struct STACK
-{
-  int serialNumber;
-  struct STACK *next;
+/* NODES */
+typedef struct STACK{
+    int serialNumber;
+    struct STACK *next;
 }STACK;
 
-typedef struct STOCK
-{
-  char article[MAX_LIM];
-  struct STOCK *next;
-  struct STACK *managementArticle;
+typedef struct STOCK{
+    char article[_BUFFER];
+    struct STOCK *next;
+    struct STACK *managementArticle;
 }STOCK;
 
 STOCK *head = NULL;
 
-int nArticles();
-void addArticleToStock();
-void deleteArticleFromStock(int index);
-void printStockList();
+/* PROTOTYPES */
+void callMenu(char* select);
+int nElementsSTOCK();
+bool isEmpty();
+void showTitle(char* select);
+void addElementSTOCK();
+void addElementSTACK();
+void removeElementSTOCK();
+void removeElementSTACK();
+void showSTOCK();
+void showSTACK();
+void cleanUp();
 
 int main()
 {
-    system("cls");
-    int option = 0;
-
-    do
-    {
-        printf("****PRODUCT MANAGER****\n\n");
-        printf("1.-Add an article to stock.\n");
-        printf("2.-Delete an article from stock.\n");
-        printf("3.-Print list of articles in stock.\n");
-        printf("4.-Exit\n");
-        printf("Select an option: ");
-        scanf("%d", &option);
-        system("cls");
-    } while (option < 1 || option > 4);
-    
-    switch(option)
-    {
-        case 1:
-            addArticleToStock();
-            main();
-            break;
-        case 2:
-            deleteArticleFromStock(nArticles());
-            main();
-            break;
-        case 3:
-            printStockList();
-            getch();
-            main();
-            break;
-        case 4: 
-            system("cls");
-            printf("\nPROGRAM FINISHED\n");
-            break;
-    }
+    callMenu("STOCK");
     return 0;
 }
 
-int nArticles()
+/* DEFINITIONS */
+void callMenu(char* select)//display STOCK or STACK menu
 {
-    STOCK *cont = head;
-    int index = 0;
-    while(cont){index++; cont = cont->next;}
-    cont = NULL;
-    free(cont);
-    return index;
+    if(select == "STOCK")
+    {
+        system("cls");
+        int option = 0;
+        do
+        {
+            showTitle("STOCK");
+            printf("1.- Show products\n");
+            printf("2.- Add product\n");
+            printf("3.- Remove product\n");
+            printf("4.- Display STACK menu\n");
+            printf("5.- Exit\n");
+            printf("Select an option: ");
+            scanf("%d", &option);
+            system("cls");
+        } while (option < 1 || option > 5);
+        
+        switch(option)
+        {
+            case 1: 
+                system("cls");
+                showTitle("STOCK");
+                showSTOCK();
+                callMenu("STOCK");
+                break;
+            case 2: 
+                addElementSTOCK();
+                callMenu("STOCK");
+                break;
+            case 3: 
+                
+                break;
+            case 4: 
+                callMenu("STACK");
+                break;
+            case 5: 
+                cleanUp();
+                break;
+        }
+    }
+    else if(select == "STACK")
+    {
+        system("cls");
+        int option = 0;
+        do
+        {
+            showTitle("STACK");
+            printf("1.- Show barcodes\n");
+            printf("2.- Add barcodes\n");
+            printf("3.- Remove barcodes\n");
+            printf("4.- Return to main menu\n");
+            printf("Select an option: ");
+            scanf("%d", &option);
+            system("cls");
+        } while (option < 1 || option > 5);
+        
+        switch(option)
+        {
+            case 1: 
+                
+                break;
+            case 2: 
+                
+                break;
+            case 3: 
+                
+                break;
+            case 4: 
+                callMenu("STOCK");
+                break;
+        }
+    }
+    else{printf("\n***ERROR***\n");}
 }
 
-void addArticleToStock()
+int nElementsSTOCK()//returns how many elements are in the list
 {
-    printf("****PRODUCT MANAGER****\n\n");
-    char prod[MAX_LIM];
-    printf("Enter article: ");
-    scanf("%s",prod);
-
-    STOCK *add = malloc(sizeof(STOCK));
-    /* strcpy(add->article,prod);
-    add->next = NULL;
-    add->managementArticle = NULL; */
-
-    if(add != NULL)
+    if(isEmpty()){return 0;}
+    else
     {
-        strcpy(add->article,prod);
+        STOCK *temp = head;
+        int cont = 0;
+        while(temp)
+        {
+            cont++;
+            temp = temp->next;
+        }
+        temp = NULL;
+        free(temp);
+        return cont;
+    } 
+}
+
+bool isEmpty()//check if the STOCK is empty
+{
+    if(head == NULL){return true;}
+    else{return false;}
+}
+
+void showTitle(char* select)//display a diferent title depending of the menu
+{
+    if(select == "STOCK")
+    {
+        printf("****MANAGER OF STOCK****\n\n");
+    }
+    else if(select == "STACK")
+    {
+        printf("****MANAGER OF STACK****\n\n");
+    }
+    else{printf("\n***ERROR***\n\n");}
+}
+
+void addElementSTOCK()//add a new item to the STOCK
+{
+    system("cls");
+    fflush(stdin);
+    showTitle("STOCK");
+
+    STOCK *add = malloc(sizeof(STOCK));//create new node
+    if(add != NULL)//check for correct memory alocation
+    {
+        char item[_BUFFER];//enter article name
+        printf("Enter new article: ");
+        scanf("%[^\n]",item);
         add->next = NULL;
         add->managementArticle = NULL;
+        strcpy(add->article,item);
 
-        if(head == NULL){head = add;}
-        else
+        if(isEmpty()){head = add;}//add the new item to the beginning of the list if it is empty
+        else//add the new item at the end of the list
         {
             STOCK *temp = head;
             while(temp->next){temp = temp->next;}
@@ -112,78 +188,57 @@ void addArticleToStock()
         }
         add = NULL;
         free(add);
-        printf("\nNew article added\n");
+        printf("\n***NEW ARTICLE ADDED SUCCESFULLY***\n\n");
     }
-    else{printf("\n***ALOCATION FAILURE***\n");}
+    else{printf("\n***ALOCATION FAILURE***\n\n");}
     getch();
 }
 
-void deleteArticleFromStock(int index)
+void addElementSTACK()//add a new barcode to the STACK
 {
-    if(head == NULL)//STOCK EMPTY
-    {
-        printf("****PRODUCT MANAGER****\n\n"); 
-        printf("\n***STOCK EMPTY***\n"); 
-        getch();
-    }
 
-    else//ARTICLES IN STOCK 
-    {
-        printStockList();
-
-        int prodNum = 0;
-        printf("\nENTER ARTICLE #: \n");
-        scanf("%d",&prodNum);
-
-        if(prodNum > 0 && prodNum <= index)//INDEX BETWEEN RANGE
-        {   
-            if(index == 1){head = NULL; free(head);}//ONE ARTICLE ON THE LIST
-
-            else//MULTIPLE ARTICLES ON THE LIST
-            {
-                STOCK *prev = head;
-                STOCK *current = head->next;
-
-                if(prodNum == 1){free(head); head = current;}//DELETE THE FIRST ARTICLE
-
-                else
-                {
-                    for(int i = 0; i < prodNum-2; i++)
-                    {
-                        prev = prev->next;
-                        current = current->next;
-                    }
-                    
-                    prev->next = current->next;
-
-                }
-                prev = NULL;
-                current = NULL;
-                free(prev);
-                free(current);
-            }
-            printf("\n***Article deleted***\n");
-        }
-
-        else{ printf("\n***ERROR***\n");}//INDEX OUT OF RANGE
-        getch();
-    }
 }
 
-void printStockList()
+void removeElementSTOCK()//remove an item from STOCK
 {
-    printf("****PRODUCT MANAGER****\n\n");
-    STOCK *print = head;
-    if(print == NULL){printf("\n***STOCK EMPTY***\n");}
+
+}
+
+void removeElementSTACK()//remove barcode(s) from STACK
+{
+
+}
+
+void showSTOCK()//display the list of articles
+{
+    if(isEmpty()){printf("***STOCK EMPTY***\n");}//check if the list is empty
     else
     {
-        printf("Products: \n");
-        for (int  i = 1; print; i++)
+        STOCK *print = head;//pointer to traverse the list
+        for(int i = 1; print; i++)
         {
             printf("%d.-%s\n",i,print->article);
             print = print->next;
         }
         print = NULL;
-        free(print); 
     }
+    getch();
+}
+
+void showSTACK()//display the barcodes 
+{
+
+}
+
+void cleanUp()//clean memory before finish the program
+{
+    system("cls");
+    STOCK *maid;
+    while(head)
+    {
+        maid = head->next;
+        free(head);
+        head = maid;   
+    }
+    printf("\n***PROGRAM FINISHED***\n");
 }
