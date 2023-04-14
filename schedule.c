@@ -1,8 +1,7 @@
 /*
 *Fecha de creación: 23/10/2022
 *
-*2.-Desarrolla un menu igual que el que hemos creado en el ejemplo de SCHEDULE, 
-*que permite AÑADIR, IMPRIMIR y ELIMINAR tareas para cierto día especifico que tendra que ser 
+*2.-Desarrolla un menu que permite AÑADIR, IMPRIMIR y ELIMINAR tareas para cierto día especifico que tendra que ser 
 *introducido tras pedir el día y el mes. El mes indicara el primer indice de nuestra matriz 
 *y el día el segundo indice, algo así calendar[month][day]
 */
