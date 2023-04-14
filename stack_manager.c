@@ -30,7 +30,7 @@ int main()
     int option = 0;
     do
     {
-        printf("****MANAGER OF STACK****\n\n");
+        printf("****STACK MANAGER****\n\n");
         printf("1.- Show products\n");
         printf("2.- Add product\n");
         printf("3.- Remove product\n");
